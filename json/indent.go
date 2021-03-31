@@ -11,7 +11,7 @@ import (
 // See stdlib encoding/json.MarshalIndent for more information.
 func WriteIndent(w io.Writer, v interface{}, prefix, indent string) error {
 	buf, err := json.MarshalIndent(v, "", "  ")
-	if err == nil {
+	if err != nil {
 		return err
 	}
 
