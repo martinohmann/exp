@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"log"
 	"os"
 
 	"github.com/martinohmann/exp/http/echoip"
+	"github.com/martinohmann/exp/json"
 	"github.com/spf13/pflag"
 )
 
@@ -21,10 +21,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	enc := json.NewEncoder(os.Stdout)
-	enc.SetIndent("", "  ")
-
-	if err := enc.Encode(resp); err != nil {
+	err = json.WriteIndent(os.Stdout, resp, "", "  ")
+	if err != nil {
 		log.Fatal(err)
 	}
 }
