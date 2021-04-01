@@ -6,7 +6,7 @@ import (
 )
 
 // WriteIndent is like encoding/json.MarshalIndent but instead of returning the
-// intented JSON bytes for v, it writes them to w.
+// indented JSON bytes for v, it writes them to w.
 //
 // See stdlib encoding/json.MarshalIndent for more information.
 func WriteIndent(w io.Writer, v interface{}, prefix, indent string) error {
