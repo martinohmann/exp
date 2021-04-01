@@ -1,7 +1,5 @@
 .DEFAULT_GOAL := help
 
-GOLANGCI_LINT_VERSION ?= v1.37.0
-
 TEST_FLAGS ?= -race
 PKG_BASE   ?= $(shell go list .)
 PKGS       ?= $(shell go list ./... | grep -v /vendor/)
@@ -27,8 +25,6 @@ coverage: ## generate code coverage
 
 .PHONY: lint
 lint: ## run golangci-lint
-	command -v golangci-lint > /dev/null 2>&1 || \
-	  curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH)/bin $(GOLANGCI_LINT_VERSION)
 	golangci-lint run
 
 .PHONY: clean
