@@ -4,7 +4,7 @@ TEST_FLAGS ?= -race
 PKG_BASE   ?= $(shell go list .)
 PKGS       ?= $(shell go list ./... | grep -v /vendor/)
 SOURCES     = $(shell find . -name '*.go')
-BINARIES    = $(shell find cmd/ -mindepth 1 -maxdepth 1 -type d | sed -e 's#cmd/#build/#g')
+BINARIES    = $(shell find cmd/ -mindepth 1 -maxdepth 1 -type d | sed -e 's/cmd\//build\//g')
 
 .PHONY: help
 help:
