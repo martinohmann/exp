@@ -4,10 +4,12 @@ import (
 	"errors"
 	"fmt"
 	"math/big"
+	"os"
 	"strings"
 
 	"github.com/martinohmann/exp/pflagx"
 	"github.com/spf13/pflag"
+	"github.com/spf13/viper"
 )
 
 func ExampleRegisterValidatorFunc() {
@@ -63,4 +65,26 @@ func ExampleFunc() {
 
 	// Output:
 	// 12345678901234567890123456789012345678901234567890
+}
+
+func ExampleBindViper() {
+	flags := pflag.NewFlagSet("snakes", pflag.ContinueOnError)
+	val := flags.String("the-flag", "", "the flag usage")
+
+	if err := flags.Parse(os.Args[1:]); err != nil {
+		fmt.Fprintln(os.Stderr, "error:", err)
+		os.Exit(1)
+	}
+
+	v := viper.New()
+
+	// Configure viper as needed.
+	v.SetEnvPrefix("example")
+
+	if err := pflagx.BindViper(flags, v); err != nil {
+		fmt.Fprintln(os.Stderr, "error:", err)
+		os.Exit(1)
+	}
+
+	fmt.Println(*val)
 }

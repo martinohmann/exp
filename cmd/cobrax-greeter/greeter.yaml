@@ -1,0 +1,4 @@
+---
+listen-addr: localhost:8081
+message: 'Hey there!'
+verbose: true
