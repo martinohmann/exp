@@ -6,7 +6,8 @@
 ![GitHub](https://img.shields.io/github/license/martinohmann/exp?color=orange)
 
 Experimental go packages and commands. There are no API stability guarantees
-and packages may come and go at any time.
+and packages may come, break and go at any time. This is just a playground to
+try things out.
 
 ## Installation
 
