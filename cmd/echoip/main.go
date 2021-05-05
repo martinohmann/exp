@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/martinohmann/exp/http/echoip"
-	"github.com/martinohmann/exp/json"
+	"github.com/martinohmann/exp/jsonx"
 	"github.com/spf13/pflag"
 )
 
@@ -21,7 +21,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	err = json.WriteIndent(os.Stdout, resp, "", "  ")
+	err = jsonx.WriteIndent(os.Stdout, resp, "", "  ")
 	if err != nil {
 		log.Fatal(err)
 	}
