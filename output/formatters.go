@@ -37,6 +37,12 @@ func (m FormatterMap) Register(name string, f Formatter) {
 	m[name] = f
 }
 
+// Register registers a FormatFunc. Panics if a formatter with the same name
+// already exists.
+func (m FormatterMap) RegisterFunc(name string, f FormatFunc) {
+	m.Register(name, f)
+}
+
 // Names returns a sorted slice of formatter names. This is useful to present
 // allowed values in command line flags.
 func (m FormatterMap) Names() []string {
