@@ -20,18 +20,13 @@ type Config struct {
 	// TemplateConfig is optional configuration for the underlying template
 	// struct for template-based formatter.
 	// See: https://golang.org/pkg/text/template/#Template
-	TemplateConfig struct {
-		// Funcs configures additional template funcs.
-		// See: https://golang.org/pkg/text/template/#Template.Funcs
-		Funcs template.FuncMap
-		// Options configures additional template options.
-		// See: https://golang.org/pkg/text/template/#Template.Option
-		Options []string
-	}
+	TemplateConfig TemplateConfig
 	// TemplateItems configures the behaviour of template based formatters. If
 	// true the template applies only to the items of a slice that should be
 	// formatted. This allows for omission of the `range` loop in templates.
 	// This config only applies to slices. Has no effect on non-slice types.
+	//
+	// @FIXME(mohmann): should this be part of TemplateConfig instead?
 	TemplateItems bool
 	// TrailingNewline ensures that the formatted output always ends with a
 	// trailing newline character if it is not empty. Does not add a newline if
@@ -42,6 +37,18 @@ type Config struct {
 	// the original object is passed as is.
 	// See RFC: https://datatracker.ietf.org/doc/html/rfc6901
 	JSONPointer string
+}
+
+// TemplateConfig is optional configuration for the underlying template struct
+// for template-based formatter.
+// See: https://golang.org/pkg/text/template/#Template
+type TemplateConfig struct {
+	// Funcs configures additional template funcs.
+	// See: https://golang.org/pkg/text/template/#Template.Funcs
+	Funcs template.FuncMap
+	// Options configures additional template options.
+	// See: https://golang.org/pkg/text/template/#Template.Option
+	Options []string
 }
 
 // Format formats v using the given config and writes the result to w. Returns
