@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/fatih/color"
 	"github.com/martinohmann/exit"
 	"github.com/spf13/pflag"
 )
@@ -17,7 +18,7 @@ func Run(fn func() error) {
 			return exit.CodeOK, true
 		}
 
-		fmt.Fprintln(os.Stderr, "error:", err)
+		fmt.Fprintln(os.Stderr, color.RedString("error:"), err)
 
 		return 0, false
 	})
