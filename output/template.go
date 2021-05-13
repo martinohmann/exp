@@ -1,13 +1,13 @@
 package output
 
 import (
+	"bytes"
 	"errors"
-	"io"
 	"reflect"
 	"text/template"
 )
 
-func formatTemplate(w io.Writer, v interface{}, config *Config) error {
+func formatTemplate(buf *bytes.Buffer, v interface{}, config *Config) error {
 	if config.Template == "" {
 		return errors.New("template must not be empty")
 	}
@@ -28,19 +28,17 @@ func formatTemplate(w io.Writer, v interface{}, config *Config) error {
 		for i := 0; i < n; i++ {
 			v := rv.Index(i).Interface()
 
-			if err := tpl.Execute(w, v); err != nil {
+			if err := tpl.Execute(buf, v); err != nil {
 				return err
 			}
 
 			if i+1 < n {
-				if _, err := w.Write([]byte{'\n'}); err != nil {
-					return err
-				}
+				buf.WriteByte('\n')
 			}
 		}
 
 		return nil
 	}
 
-	return tpl.Execute(w, v)
+	return tpl.Execute(buf, v)
 }
