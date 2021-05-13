@@ -7,13 +7,13 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"strings"
 	"text/template"
 
 	"github.com/ghodss/yaml"
 	"github.com/martinohmann/exit"
 	"github.com/martinohmann/exp/cli"
 	"github.com/martinohmann/exp/output"
+	"github.com/martinohmann/exp/pflagx"
 	"github.com/mgutz/ansi"
 	"github.com/spf13/pflag"
 )
@@ -74,11 +74,13 @@ Flags:`)
 		fs.PrintDefaults()
 	}
 
-	fs.StringVarP(&config.Format, "output", "o", config.Format, fmt.Sprintf("output format, valid values: '%s'", strings.Join(output.FormatterNames(), "', '")))
+	fs.StringVarP(&config.Format, "output", "o", config.Format, "output format")
 	fs.StringVarP(&config.Template, "template", "t", config.Template, "output template. ignored unless output format is 'gotemplate'")
 	fs.StringVarP(&config.JSONPointer, "jsonpointer", "j", config.JSONPointer, "json pointer for filtering the data before formatting, e.g. '/foo/0/bar'")
 	fs.BoolVar(&config.TemplateItems, "items", config.TemplateItems, "if true, the template applies to the items if the input is a slice. ignored unless output format is 'gotemplate'")
 	fs.BoolVar(&config.TrailingNewline, "newline", config.TrailingNewline, "ensure output ends with a trailing newline")
+
+	pflagx.RegisterValidatorFunc(fs, "output", pflagx.AnyOf(output.FormatterNames()...))
 
 	if err := fs.Parse(os.Args[1:]); err != nil {
 		return nil, err
