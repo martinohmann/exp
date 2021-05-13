@@ -4,7 +4,6 @@ package main
 import (
 	"bufio"
 	"encoding/xml"
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -12,15 +11,15 @@ import (
 	"text/template"
 
 	"github.com/ghodss/yaml"
+	"github.com/martinohmann/exit"
+	"github.com/martinohmann/exp/cli"
 	"github.com/martinohmann/exp/output"
 	"github.com/mgutz/ansi"
 	"github.com/spf13/pflag"
 )
 
 func main() {
-	if err := run(); err != nil && !errors.Is(err, pflag.ErrHelp) {
-		fmt.Fprintln(os.Stderr, "error:", err)
-	}
+	cli.Run(run)
 }
 
 func run() error {
@@ -42,7 +41,7 @@ func run() error {
 
 	args, err := parseArgs(config)
 	if err != nil {
-		return err
+		return exit.Error(exit.CodeUsage, err)
 	}
 
 	rc, err := readCloser(args)
