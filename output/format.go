@@ -69,7 +69,7 @@ func Format(w io.Writer, v interface{}, config *Config) error {
 func FormatBytes(v interface{}, config *Config) ([]byte, error) {
 	formatters := config.Formatters
 	if len(formatters) == 0 {
-		formatters = Formatters
+		formatters = DefaultFormatters
 	}
 
 	f, ok := formatters[config.Format]

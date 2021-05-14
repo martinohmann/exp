@@ -55,10 +55,10 @@ func (m FormatterMap) Names() []string {
 	return names
 }
 
-// Formatters is a map of built-in formatters which can be extended to make
-// more formatters globally available. These are used as a fallback if the user
-// does not provide a custom map as part of the config to Format* funcs.
-var Formatters = FormatterMap{
+// DefaultFormatters is a map of built-in formatters which can be extended to
+// make more formatters globally available. These are used as a fallback if the
+// user does not provide a custom map as part of the config to Format* funcs.
+var DefaultFormatters = FormatterMap{
 	"json": FormatFunc(func(v interface{}, config *Config) ([]byte, error) {
 		return json.MarshalIndent(v, "", "  ")
 	}),
@@ -82,17 +82,17 @@ var Formatters = FormatterMap{
 // RegisterFormatter globally registers a Formatter. Panics if a formatter with
 // the same name already exists.
 func RegisterFormatter(name string, f Formatter) {
-	Formatters.Register(name, f)
+	DefaultFormatters.Register(name, f)
 }
 
 // RegisterFormatFunc globally registers a FormatFunc. Panics if a formatter
 // with the same name already exists.
 func RegisterFormatFunc(name string, f FormatFunc) {
-	Formatters.RegisterFunc(name, f)
+	DefaultFormatters.RegisterFunc(name, f)
 }
 
 // FormatterNames returns a sorted slice of globally registered formatter
 // names. This is useful to present allowed values in command line flags.
 func FormatterNames() []string {
-	return Formatters.Names()
+	return DefaultFormatters.Names()
 }
