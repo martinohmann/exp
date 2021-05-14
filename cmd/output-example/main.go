@@ -23,14 +23,17 @@ func main() {
 }
 
 func run() error {
+	formatters := output.DefaultFormatters.DeepCopy()
+
 	// Register custom format func.
-	output.RegisterFormatFunc("xml", func(v interface{}, config *output.Config) ([]byte, error) {
+	formatters.RegisterFormatFunc("xml", func(v interface{}, config *output.Config) ([]byte, error) {
 		return xml.Marshal(v)
 	})
 
 	config := &output.Config{
-		Format:   "json",
-		Template: `{{color "cyan"}}{{.}}{{color "reset"}}`,
+		Format:     "json",
+		Formatters: formatters,
+		Template:   `{{color "cyan"}}{{.}}{{color "reset"}}`,
 		TemplateConfig: output.TemplateConfig{
 			// Custom template func definitions.
 			Funcs: template.FuncMap{

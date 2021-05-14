@@ -27,9 +27,9 @@ func (f FormatFunc) Format(v interface{}, config *Config) ([]byte, error) {
 // FormatterMap maps a user-defined name to a formatter.
 type FormatterMap map[string]Formatter
 
-// Register registers a Formatter. Panics if a formatter with the same name
-// already exists.
-func (m FormatterMap) Register(name string, f Formatter) {
+// RegisterFormatter registers a Formatter. Panics if a formatter with the same
+// name already exists.
+func (m FormatterMap) RegisterFormatter(name string, f Formatter) {
 	if _, exists := m[name]; exists {
 		panic(fmt.Sprintf("formatter with name %q already registered", name))
 	}
@@ -37,10 +37,10 @@ func (m FormatterMap) Register(name string, f Formatter) {
 	m[name] = f
 }
 
-// RegisterFunc registers a FormatFunc. Panics if a formatter with the same
-// name already exists.
-func (m FormatterMap) RegisterFunc(name string, f FormatFunc) {
-	m.Register(name, f)
+// RegisterFormatFunc registers a FormatFunc. Panics if a formatter with the
+// same name already exists.
+func (m FormatterMap) RegisterFormatFunc(name string, f FormatFunc) {
+	m.RegisterFormatter(name, f)
 }
 
 // Names returns a sorted slice of formatter names. This is useful to present
@@ -93,13 +93,13 @@ var DefaultFormatters = FormatterMap{
 // RegisterFormatter globally registers a Formatter. Panics if a formatter with
 // the same name already exists.
 func RegisterFormatter(name string, f Formatter) {
-	DefaultFormatters.Register(name, f)
+	DefaultFormatters.RegisterFormatter(name, f)
 }
 
 // RegisterFormatFunc globally registers a FormatFunc. Panics if a formatter
 // with the same name already exists.
 func RegisterFormatFunc(name string, f FormatFunc) {
-	DefaultFormatters.RegisterFunc(name, f)
+	DefaultFormatters.RegisterFormatFunc(name, f)
 }
 
 // FormatterNames returns a sorted slice of globally registered formatter
