@@ -65,6 +65,9 @@ var Formatters = FormatterMap{
 	"yaml": FormatFunc(func(v interface{}, config *Config) ([]byte, error) {
 		return yaml.Marshal(v)
 	}),
+	"gostring": FormatFunc(func(v interface{}, config *Config) ([]byte, error) {
+		return []byte(fmt.Sprintf("%#v", v)), nil
+	}),
 	"gotemplate": FormatFunc(func(v interface{}, config *Config) ([]byte, error) {
 		var buf bytes.Buffer
 
