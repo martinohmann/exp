@@ -55,6 +55,17 @@ func (m FormatterMap) Names() []string {
 	return names
 }
 
+// DeepCopy copies m. Returns a new FormatterMap which contains all entries
+// from m.
+func (m FormatterMap) DeepCopy() FormatterMap {
+	c := make(FormatterMap, len(m))
+	for name, formatter := range m {
+		c[name] = formatter
+	}
+
+	return c
+}
+
 // DefaultFormatters is a map of built-in formatters which can be extended to
 // make more formatters globally available. These are used as a fallback if the
 // user does not provide a custom map as part of the config to Format* funcs.
