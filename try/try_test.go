@@ -31,13 +31,13 @@ func TestRun(t *testing.T) {
 
 		err := try.Run(func() {
 			a = 42
-			try.Checkf(nil, "error occured")
+			try.Checkf(nil, "error occurred")
 			b = 43
-			try.Checkf(errors.New("whoops"), "error occured: a=%d, b=%d, c=%d", a, b, c)
+			try.Checkf(errors.New("whoops"), "error occurred: a=%d, b=%d, c=%d", a, b, c)
 			c = 44
 		})
 
-		require.EqualError(t, err, "error occured: a=42, b=43, c=0: whoops")
+		require.EqualError(t, err, "error occurred: a=42, b=43, c=0: whoops")
 		require.Equal(t, 42, a)
 		require.Equal(t, 43, b)
 		require.Equal(t, 0, c)
@@ -59,7 +59,7 @@ func TestRun(t *testing.T) {
 				t.Error("expected panic but got nil")
 			}
 		}()
-		try.Run(func() {
+		_ = try.Run(func() {
 			panic("whoops")
 		})
 	})
